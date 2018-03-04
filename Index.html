@@ -1,0 +1,569 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="gb1312">
+    <title>排序展示</title>
+    <style type="text/css">
+        body, p, h1, h2, h3 {
+            margin: 0;
+            padding: 0;
+        }
+
+        .Container {
+            width: 100%;
+            height: auto;
+            background: #EEEEEE;
+            padding: 20px 0;
+        }
+
+        #navTop {
+            background: #2A5ABE;
+            min-height: 50px;
+            font-size: 24px;
+            border-bottom: 3px solid #CFD4E2;
+            width: 100%;
+            text-align: left;
+            text-indent: 2em;
+            color: #ffffff;
+            line-height: 48px;
+        }
+
+        div[class|='Item'] {
+            width: 90%;
+            background-color: #ffffff;
+            border-radius: 10px;
+            min-height: 100px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        div[class|='ItemType'] {
+            width: 50%;
+            float: left;
+            margin-bottom: 20px;
+        }
+
+        .ItemType-Left > p {
+            width: 90%;
+            font-size: 16px;
+            line-height: 32px;
+            padding: 0 20px;
+            border-bottom: 1px dotted grey;
+            margin: 0 auto;
+        }
+
+        div[class|='line'] {
+            width: 90%;
+            margin: 10px auto;
+            height: 40px;
+        }
+
+            div[class|='line'] span {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                color: #ffffff;
+                border-radius: 30px;
+                background-color: #004B97;
+                border: 2px solid #003D79;
+                font-size: 20px;
+                text-align: center;
+                line-height: 40px;
+                margin: 2px;
+                position: relative;
+                top: 0;
+                left: 0;
+            }
+
+                div[class|='line'] span:hover {
+                    cursor: pointer;
+                }
+
+        .sorted {
+            color: red;
+        }
+
+        .BigCircle {
+            width: 80px;
+            height: 80px;
+            color: #ffffff;
+            border-radius: 50px;
+            background-color: #004B97;
+            border: 10px solid #003D79;
+            font-size: 40px;
+            text-align: center;
+            line-height: 80px;
+            position: absolute;
+            margin-left: -40px;
+            margin-top: -40px;
+            left: 50%;
+            top: 50%;
+        }
+
+        select {
+            background: #2A5ABE;
+            color: #ffffff;
+            font-size: 22px;
+            border: none;
+        }
+
+        pre.CodeStyle {
+            font-size: 18px;
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navTop">
+        八大排序之
+        <select id="SortType">
+            <option value="0" selected="selected">冒泡排序</option>
+            <option value="1">选择排序</option>
+            <option value="2">插入排序</option>
+            <option value="3">快速排序</option>
+            <option value="4">希尔排序</option>
+            <option value="5">归并排序</option>
+            <option value="6">堆排序</option>
+            <option value="7">基排序</option>
+        </select>
+        展示
+    </div>
+    <div class="Container">
+        <div class="Item-01">
+            <div class="ItemType-Left">
+                <p title="sortName">算法名称:</p>
+                <p title="enSortName">英文名称:</p>
+                <p title="BadTime">最差时间复杂度:</p>
+                <p title="AeraTime">平均时间复杂度:</p>
+                <p title="Space">空间复杂度:</p>
+                <p title="Stable">稳定性:</p>
+                <p>
+                    操  作:
+                    <input type="button" id="initial" name="initial" value="Initial" />
+                    <input type="button" id="Reset" name="Reset" value="Reset" />
+                    <input type="button" id="BeginSort" name="BeginSort" value="BeginSort" />
+                </p>
+                <p>
+                    <label>算法代码:</label>
+                </p>
+                <p>
+            <!--算法源码区-->
+            <pre class="CodeStyle">
+                function BubbleSort(arr)
+                {
+                    for (var i = 0, length = arr.length; i < length; i++)
+                    {
+                        for (var j = length - 1; j - i >= 0; j--)
+                        {
+                            if (arr[j - 1] > arr[j])
+                            {
+                                var temp = arr[j];
+                                arr[j] = arr[j - 1];
+                                arr[j - 1] = temp;
+                            }
+                        }
+                    }
+                }
+            </pre>
+
+            <pre class="CodeStyle">
+               function SelectSort(arr)
+                {
+                    for (var i = 0; i < arr.Length - 1; i++)
+                    {
+                        var minIndex = i;
+                        for (var j = i + 1; j < arr.Length; j++)
+                        {
+                            if (arr[minIndex] > arr[j]) {
+                                minIndex = j;
+                            }
+                        }
+
+                        var temp = arr[minIndex];
+                        arr[minIndex] = arr[i];
+                        arr[i] = temp;
+                    }
+                }
+            </pre>
+           <!--End 算法源码区-->
+                </p>
+            </div>
+            <div class="ItemType-Right"></div>
+
+            <script type="text/javascript">
+
+                window.onload = function () {
+                    //设置默认算法
+                    var triggerSelection = document.getElementById("SortType").onchange();
+                };
+
+                //算法信息
+                var sortTypeJson = {
+                    0: { "sortName": "冒泡排序", "enSortName": "Bubble Sort", "BadTime": "O(n2)", "AeraTime": "O(n2) ", "Space": "O(1)", "Stable": "稳定", "funcName": "BubbleSort" },
+                    1: { "sortName": "选择排序", "enSortName": "Select Sort", "BadTime": "O(n2)", "AeraTime": "O(n2)", "Space": "O(1)", "Stable": "稳定", "funcName": "SelectSort" },
+                    2: { "sortName": "插入排序", "enSortName": "Insert Sort", "BadTime": "O(n2)", "AeraTime": "O(n2)", "Space": "O(1)", "Stable": "稳定", "funcName": "InsertSort" },
+                    3: { "sortName": "快速排序", "enSortName": "Quick Sort", "BadTime": "O(n2)", "AeraTime": "O(n*log2n)", "Space": "O(log2n)~O(n)", "Stable": "不稳定", "funcName": "QuickSort" },
+                    4: { "sortName": "希尔排序", "enSortName": "Shell Sort", "BadTime": "", "AeraTime": "", "Space": "O(1)", "Stable": "不稳定", "funcName": "ShellSort" },
+                    5: { "sortName": "归并排序", "enSortName": "Merge Sort", "BadTime": "", "AeraTime": "", "Space": "O(1)", "Stable": "稳定", "funcName": "MergeSort" },
+                    6: { "sortName": "堆排序", "enSortName": "Heap Sort", "BadTime": "O(n*log2n)", "AeraTime": "O(n*log2n)", "Space": "O(1)", "Stable": "不稳定", "funcName": "HeapSort" },
+                    7: { "sortName": "基排序", "enSortName": "Base Sort", "BadTime": "", "AeraTime": "", "Space": "O(1)", "Stable": "稳定", "funcName": "BaseSort" }
+                };
+                var funcName;
+                var selectionElem = document.getElementById("SortType");
+
+                //注册select change事件
+                addEvent(selectionElem, "change", function () {
+                    var leftContainerNodes = document.getElementsByClassName("ItemType-Left")[0].getElementsByTagName('p');
+                    var index = this.options[this.options.selectedIndex].value;
+                    var selectedJson = sortTypeJson[index];
+
+                    for (var itemNum = 0, len = leftContainerNodes.length; len > itemNum; itemNum++) {
+                        if (itemNum >= 6) {
+                            break;
+                        }
+                        var title = leftContainerNodes[itemNum].title;
+                        var text = leftContainerNodes[itemNum].innerText;
+                        leftContainerNodes[itemNum].innerText = text.substring(0, text.indexOf(':') + 1) + selectedJson[title];
+                    }
+
+                    var Initial = document.getElementById('initial');
+                    removeEvent(Initial, "click", InitData);
+                    addEvent(Initial, "click", InitData);
+
+                    var resetEventNode = document.getElementById('Reset');
+                    removeEvent(resetEventNode, "click", ResetData);
+                    addEvent(resetEventNode, "click", ResetData);
+
+                    var beginSort = document.getElementById('BeginSort');
+                    funcName = selectedJson["funcName"];
+                    removeEvent(beginSort, "click", BeginSort);
+                    addEvent(beginSort, "click", BeginSort);
+                    var preList = document.getElementsByClassName('CodeStyle');
+                    for (var codeNum = 0, codeLen = preList.length; codeNum < codeLen; codeNum++) {
+                        var codeItem = preList[codeNum];
+                        if (codeItem.hasAttribute('style')) {
+
+                            codeItem.removeAttribute('style');
+                        }
+
+
+                        if (codeNum == index) {
+                            preList[index].style.display = "block";
+                        }
+                    }
+
+                    dataTable.Reset();
+                });
+
+                //遮罩效果
+                var maskLayer = (function () {
+                    var screenHeight = Math.max(document.body.clientHeight, window.innerHeight);
+                    var maskDom = document.createElement('div');
+                    maskDom.style.width = "100%";
+                    maskDom.style.height = screenHeight + "px";
+                    maskDom.style.backgroundColor = "#9D9D9D";
+                    maskDom.style.opacity = 0.5;
+                    maskDom.id = "maskDom";
+                    maskDom.style.position = "absolute";
+                    maskDom.style.top = 0;
+                    maskDom.style.left = 0;
+                    return {
+                        IsMasked: false
+                        ,
+                        appendMask: function () {
+                            if (!this.IsMasked) {
+                                document.body.appendChild(maskDom);
+                                this.IsMasked = true;
+                            }
+                        },
+                        removeMask: function () {
+                            document.body.removeChild(maskDom);
+                            this.IsMasked = false;
+                        }
+                    };
+                })();
+
+                //数据对象,包括其相应的操作
+                var dataTable = (function () {
+                    var elem;
+                    //缓存数据
+                    var datas = [], cachData = [], sortData = [];
+
+                    //右边容器标号
+                    var lineNum = 0;
+                    //标识是否已排序
+                    var IsSorted = false;
+                    var dataContainer = document.getElementsByClassName('ItemType-Right')[0];
+                    function createData(arr) {
+                        createLine();
+                        var newlineItem = document.getElementsByClassName("line-" + lineNum)[0];
+                        var Intervalid = setInterval(function () {
+                            var data = arr.shift();
+                            if (typeof data == "undefined") {
+                                clearInterval(Intervalid);
+                                return;
+                            }
+
+                            //添加遮罩层的延迟效果
+                            setTimeout(function () { maskLayer.appendMask(); }, 500);
+                            setTimeout(function () { appendElem(data); }, 500);
+
+                            //移除遮罩层
+                            setTimeout(function () {
+                                removeElem();
+                                maskLayer.removeMask();
+                                appendDataSpan(newlineItem, data);
+                            }, 1000);
+
+                        }, 1000);
+                    }
+
+                    //向Dom添加数据元素
+                    function appendDataSpan(newlineItem, data) {
+                        var dataSpan = document.createElement('span');
+                        dataSpan.innerText = data;
+                        newlineItem.appendChild(dataSpan);
+                    }
+
+                    //向Dom添加弹出元素
+                    function appendElem(innerText) {
+                        elem.innerText = innerText;
+                        document.body.appendChild(elem);
+                    }
+                    //移除Dom弹出元素
+                    function removeElem() {
+                        document.body.removeChild(elem);
+                    }
+
+                    //随机产生数据元素
+                    function randomData() {
+                        var datasNum = Math.floor(dataContainer.clientWidth * 0.9 / 48);
+                        for (var i = 0; i < datasNum; i++) {
+                            var data = Math.floor(Math.random() * 90 + 10);
+                            datas.push(data);
+                            cachData.push(data);
+                            sortData.push(data);
+                        }
+                    }
+
+                    //每次排序后的行容器
+                    function createLine() {
+                        var lineItem = document.createElement('div');
+                        lineItem.setAttribute("class", "line-" + (++lineNum));
+                        dataContainer.appendChild(lineItem);
+                        return lineItem;
+                    }
+                    return {
+                        Data: cachData,
+                        Init: function (element) {
+                            while (dataContainer.hasChildNodes()) {
+                                dataContainer.removeChild(dataContainer.firstChild);
+                            }
+                            elem = element || {};
+                            var datasLength = datas.length, cachDataLength = cachData.length, sortDataLength = sortData.length;
+                            IsSorted = false;
+                            datas.splice(0, datasLength);
+                            cachData.splice(0, cachDataLength);
+                            sortData.splice(0, sortDataLength);
+                            randomData();
+                            createData(datas);
+                        },
+                        appendLine: function () {
+                            return createLine();
+                        },
+                        appendData: function (dataLine, data) {
+                            appendDataSpan(dataLine, data);
+                        },
+                        Sort: function (func) {
+                            if (typeof func === "function") {
+                                if (IsSorted || sortData.length == 0)
+                                    return;
+                                func(sortData);
+                                IsSorted = true
+                            }
+                        },
+                        isSorted: IsSorted,
+                        Reset: function () {
+
+                            while (dataContainer.hasChildNodes()) {
+                                dataContainer.removeChild(dataContainer.firstChild);
+                            }
+                            IsSorted = false;
+                            var datasLength = datas.length, sortDataLength = sortData.length;
+                            datas.splice(0, datasLength);
+                            sortData.splice(0, sortDataLength);
+                            sortData = cachData.slice(0);
+                            var dataList = cachData.slice(0);
+                            var length = dataList.length;
+                            var newDataLine = createLine();
+                            for (var i = 0; i < length; i++) {
+                                appendDataSpan(newDataLine, dataList[i]);
+                            }
+                        }
+                    };
+
+                })();
+
+                //数据元素移动事件
+                (function () {
+                    var dataContainer = document.getElementsByClassName('ItemType-Right')[0];
+                    var clientX = 0, clientY = 0, moving = !1;
+                    addEvent(dataContainer, "mousedown", function (event) {
+                        event = event || window.event;
+                        if (event.button == 2) {
+                            return;
+                        }
+                        var targetElem = event.target || event.srcElement;
+
+                        if (targetElem.tagName.toLowerCase() == "span") {
+                            clientX = event.clientX;
+                            clientY = event.clientY;
+                            moving = !0;
+                        }
+
+                    });
+
+                    addEvent(dataContainer, "mouseup", function () {
+                        moving = !1;
+                    });
+                    addEvent(dataContainer, "mousemove", function (event) {
+                        if (!moving)
+                            return;
+                        event = event || window.event;
+                        var targetElem = event.target || event.srcElement;
+
+                        if (targetElem.tagName.toLowerCase() == "span") {
+                            var newClientX = event.clientX, newClientY = event.clientY;
+                            var offsetLeft = parseInt(targetElem.style.left) || 0;
+                            var offsetTop = parseInt(targetElem.style.top) || 0;
+                            targetElem.style.left = offsetLeft + (newClientX - clientX) + "px";
+                            targetElem.style.top = offsetTop + (newClientY - clientY) + "px";
+                            clientX = newClientX;
+                            clientY = newClientY;
+                        }
+                    });
+                })();
+
+                //向指定元素绑定指定事件
+                function addEvent(elem, eventType, func) {
+                    if (typeof elem === null || typeof elem === "undefined")
+                        return;
+                    if (elem.addeventlistener) {
+                        elem.addeventlistener(eventType, func, false);
+                    }
+                    else if (elem.attachEvent) {
+                        elem.attachEvent('on' + eventType, func);
+                    }
+                    else {
+                        elem['on' + eventType] = func;
+                    }
+                }
+
+                //数据初始化事件函数
+                function InitData() {
+                    var Node = document.createElement('span');
+                    Node.setAttribute("class", "BigCircle");
+                    dataTable.Init(Node);
+                }
+
+                //重置数据事件函数
+                function ResetData() {
+                    dataTable.Reset();
+                }
+
+                //排序绑定函数
+                function BeginSort() {
+                    if (dataTable.isSorted)
+                        return;
+
+                    var excutedFunc = funcName;
+                    switch (excutedFunc) {
+                        case "BubbleSort":
+                            dataTable.Sort(BubbleSort);
+                            break;
+                        case "SelectSort":
+                            dataTable.Sort(SelectSort);
+                            break;
+                        case "InsertSort":
+                            dataTable.Sort(InsertSort);
+                            break;
+                        case "QuickSort":
+                            dataTable.Sort(QuickSort);
+                            break;
+                        case "ShellSort":
+                            dataTable.Sort(ShellSort);
+                            break;
+                        case "MergeSort":
+                            dataTable.Sort(MergeSort);
+                            break;
+                        case "HeapSort":
+                            dataTable.Sort(HeapSort);
+                            break;
+                        case "BaseSort":
+                            dataTable.Sort(BaseSort);
+                            break;
+
+                        default: break;
+                    }
+                }
+
+                //移除绑定事件
+                function removeEvent(elem, eventType, func) {
+                    if (typeof elem === null || typeof elem === "undefined")
+                        return;
+                    if (elem.removeEventListener) {
+                        elem.removeEventListener(eventType, func, false);
+                    }
+                    else if (elem.deltachEvent) {
+                        elem.deltachEvent('on' + eventType, func);
+                    }
+                }
+                //排序函数区
+                function BubbleSort(arr) {
+                    var length = arr.length;
+
+                    for (var i = 0; i < length; i++) {
+                        var newDataLine = dataTable.appendLine();
+                        for (var j = length - 1; j - i >= 0; j--) {
+                            if (arr[j - 1] > arr[j]) {
+                                var temp = arr[j];
+                                arr[j] = arr[j - 1];
+                                arr[j - 1] = temp;
+                            }
+                        }
+                        for (var k = 0; k < length; k++) {
+                            dataTable.appendData(newDataLine, arr[k]);
+                        }
+                        var node = newDataLine.getElementsByTagName('span')[i];
+                        node.style.color = "red";
+                    }
+                }
+                function SelectSort(arr) {
+                    for (var i = 0, len = arr.length; i < len - 1; i++) {
+                        var minIndex = i;
+                        var newDataLine = dataTable.appendLine();
+                        for (var j = i + 1; j < len; j++) {
+                            if (arr[minIndex] > arr[j]) {
+                                minIndex = j;
+                            }
+                        }
+
+                        var temp = arr[minIndex];
+                        arr[minIndex] = arr[i];
+                        arr[i] = temp;
+
+                        for (var k = 0; k < len; k++) {
+                            dataTable.appendData(newDataLine, arr[k]);
+                        }
+                        var node = newDataLine.getElementsByTagName('span')[i];
+                        node.style.color = "red";
+                    }
+                }
+                //End 排序函数区
+            </script>
+        </div>
+    </div>
+</body>
+</html>
